@@ -14,6 +14,15 @@ void USessionItemWidget::SetInfo(FBlueprintSessionResult SesssionResult)
 void USessionItemWidget::RefreshUI()
 {
 	Txt_SessionName->SetText(FText());
-	Txt_PlayerCount->SetText(FText());
+
+	const int32 currentPlayers = 
+		// NumPublicConnections : 방을 만들때 들어올 수 있는 최대 인원수
+		Result.OnlineResult.Session.SessionSettings.NumPublicConnections - 
+		// NumOpenPublicConnections : 최대 인원수 에서 현재 남은 참가 자리 수
+		Result.OnlineResult.Session.NumOpenPublicConnections;
+	const int32 maxPlayers = Result.OnlineResult.Session.SessionSettings.NumPublicConnections;
+	FString PlayerCountString = FString::Printf(TEXT("%d / %d"), currentPlayers, maxPlayers);
+	Txt_PlayerCount->SetText(FText::FromString(PlayerCountString));
+
 	Txt_MapName->SetText(FText());
 }

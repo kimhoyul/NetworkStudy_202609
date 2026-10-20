@@ -25,12 +25,14 @@ void USessionListWidget::SetInfo()
 		if (SessionItemClass == nullptr)
 			continue;
 
+		// ChildWidget = SessionItemWidget하는 클래스의 객체의 주소를 받는 변수
+		// CreateWidget = 위젯
 		USessionItemWidget* ChildWidget = CreateWidget<USessionItemWidget>(GetWorld(), SessionItemClass);
-
 		if (ChildWidget == nullptr)
 			continue;
 
 		Sessions.Add(ChildWidget);
+		SessionList->AddChildToWrapBox(ChildWidget);
 	}
 
 	RefreshUI();
@@ -58,5 +60,4 @@ void USessionListWidget::RefreshUI()
 			Sessions[index]->SetVisibility(ESlateVisibility::Collapsed);
 		}
 	}
-
 }
